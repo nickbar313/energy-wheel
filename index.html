@@ -120,7 +120,12 @@
     const outerR = 185;
     const ringR = 225;
     const iconR = 135;
-    const labelR = 213;
+
+    // This controls how close the outside labels are to the center.
+    // Smaller number = closer to center.
+    // Bigger number = farther away from center.
+    const labelR = 198;
+
     const sliceAngle = 360 / hazards.length;
 
     function polarToCartesian(radius, angleDeg) {
@@ -206,21 +211,12 @@
 
       const labelPoint = polarToCartesian(labelR, midAngle);
 
-      // Move specific labels lower without moving all labels
-      const labelOffsets = {
-        "Radiation": 12,
-        "Motion": 12
-      };
-
-      const extraLabelY = labelOffsets[hazard.name] || 0;
-      const adjustedLabelY = labelPoint.y + extraLabelY;
-
       const label = makeSvgElement("text", {
         x: labelPoint.x,
-        y: adjustedLabelY,
+        y: labelPoint.y,
         "text-anchor": "middle",
         class: "outer-label",
-        transform: `rotate(${midAngle}, ${labelPoint.x}, ${adjustedLabelY})`
+        transform: `rotate(${midAngle}, ${labelPoint.x}, ${labelPoint.y})`
       });
 
       label.textContent = hazard.name;
