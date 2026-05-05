@@ -69,6 +69,7 @@
       font-size: 13px;
       font-weight: bold;
       pointer-events: none;
+      dominant-baseline: middle;
     }
 
     .center-circle {
@@ -95,7 +96,7 @@
     }
 
     .mechanical-click {
-      animation: mechanicalTurn 0.75s ease forwards;
+      animation: mechanicalGear 0.75s ease forwards;
     }
 
     .electrical-click {
@@ -103,11 +104,11 @@
     }
 
     .pressure-click {
-      animation: pressureBurst 0.75s ease forwards;
+      animation: pressurePulse 0.75s ease forwards;
     }
 
     .temperature-click {
-      animation: heatWave 0.75s ease forwards;
+      animation: heatShimmer 0.75s ease forwards;
     }
 
     .chemical-click {
@@ -119,7 +120,7 @@
     }
 
     .radiation-click {
-      animation: radiationSpin 0.75s ease forwards;
+      animation: radiationWarning 0.75s ease forwards;
     }
 
     .sound-click {
@@ -127,30 +128,33 @@
     }
 
     .motion-click {
-      animation: motionSlide 0.75s ease forwards;
+      animation: motionDash 0.75s ease forwards;
     }
 
     @keyframes gravityDrop {
       0% {
-        transform: translate(0px, 0px);
+        transform: translate(0px, 0px) scale(1);
       }
-      45% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 18px)) scale(1.04);
+      40% {
+        transform: translate(var(--move-x), calc(var(--move-y) + 26px)) scale(1.05);
       }
-      70% {
-        transform: translate(var(--move-x), calc(var(--move-y) - 5px)) scale(0.98);
+      65% {
+        transform: translate(var(--move-x), calc(var(--move-y) - 8px)) scale(0.96);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
       }
     }
 
-    @keyframes mechanicalTurn {
+    @keyframes mechanicalGear {
       0% {
-        transform: translate(0px, 0px) rotate(0deg);
+        transform: translate(0px, 0px) rotate(0deg) scale(1);
       }
-      50% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(12deg) scale(1.04);
+      30% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(22deg) scale(1.05);
+      }
+      60% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(-10deg) scale(1.02);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) rotate(0deg) scale(1);
@@ -180,33 +184,42 @@
       }
     }
 
-    @keyframes pressureBurst {
+    @keyframes pressurePulse {
       0% {
         transform: translate(0px, 0px) scale(1);
+        filter: brightness(1);
       }
-      40% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.14);
+      25% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.18);
+        filter: brightness(1.45);
       }
-      70% {
-        transform: translate(var(--move-x), var(--move-y)) scale(0.96);
+      50% {
+        transform: translate(var(--move-x), var(--move-y)) scale(0.92);
+      }
+      75% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.1);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
+        filter: brightness(1.1);
       }
     }
 
-    @keyframes heatWave {
+    @keyframes heatShimmer {
       0% {
-        transform: translate(0px, 0px) skewX(0deg);
+        transform: translate(0px, 0px) skewX(0deg) scale(1);
         filter: brightness(1);
       }
-      30% {
-        transform: translate(var(--move-x), var(--move-y)) skewX(5deg) scale(1.04);
-        filter: brightness(1.4);
+      25% {
+        transform: translate(var(--move-x), var(--move-y)) skewX(7deg) scale(1.04);
+        filter: brightness(1.35);
       }
-      60% {
-        transform: translate(var(--move-x), var(--move-y)) skewX(-5deg) scale(1.03);
-        filter: brightness(1.25);
+      50% {
+        transform: translate(var(--move-x), var(--move-y)) skewX(-7deg) scale(1.02);
+        filter: brightness(1.2);
+      }
+      75% {
+        transform: translate(var(--move-x), var(--move-y)) skewX(4deg) scale(1.04);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) skewX(0deg) scale(1);
@@ -218,11 +231,14 @@
       0% {
         transform: translate(0px, 0px) scale(1);
       }
-      30% {
-        transform: translate(var(--move-x), calc(var(--move-y) - 10px)) scale(1.07);
+      25% {
+        transform: translate(var(--move-x), calc(var(--move-y) - 12px)) scale(1.06);
       }
-      60% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 5px)) scale(0.98);
+      50% {
+        transform: translate(calc(var(--move-x) + 6px), calc(var(--move-y) - 4px)) scale(0.98);
+      }
+      75% {
+        transform: translate(calc(var(--move-x) - 5px), calc(var(--move-y) - 9px)) scale(1.04);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
@@ -234,28 +250,39 @@
         transform: translate(0px, 0px) scale(1);
         filter: brightness(1);
       }
-      35% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.1);
+      30% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.12);
         filter: brightness(1.35) drop-shadow(0 0 14px #73d900);
       }
-      70% {
-        transform: translate(var(--move-x), var(--move-y)) scale(0.97);
+      60% {
+        transform: translate(var(--move-x), var(--move-y)) scale(0.95);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
+        filter: brightness(1.1);
       }
     }
 
-    @keyframes radiationSpin {
+    @keyframes radiationWarning {
       0% {
         transform: translate(0px, 0px) rotate(0deg) scale(1);
+        filter: brightness(1);
       }
-      45% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(18deg) scale(1.08);
-        filter: drop-shadow(0 0 16px #73d900);
+      25% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(16deg) scale(1.08);
+        filter: brightness(1.6) drop-shadow(0 0 18px #73d900);
+      }
+      50% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(-16deg) scale(1.03);
+        filter: brightness(1.25);
+      }
+      75% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(8deg) scale(1.06);
+        filter: brightness(1.45) drop-shadow(0 0 14px #73d900);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) rotate(0deg) scale(1);
+        filter: brightness(1.15);
       }
     }
 
@@ -279,15 +306,15 @@
       }
     }
 
-    @keyframes motionSlide {
+    @keyframes motionDash {
       0% {
-        transform: translate(0px, 0px);
+        transform: translate(0px, 0px) scale(1);
       }
-      45% {
-        transform: translate(calc(var(--move-x) * 2), var(--move-y)) scale(1.04);
+      25% {
+        transform: translate(calc(var(--move-x) * 2.5), var(--move-y)) scale(1.05);
       }
-      70% {
-        transform: translate(calc(var(--move-x) * 0.7), var(--move-y)) scale(0.98);
+      55% {
+        transform: translate(calc(var(--move-x) * 0.45), var(--move-y)) scale(0.96);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
@@ -340,7 +367,8 @@
     const ringR = 225;
     const iconR = 135;
 
-    // All labels sit evenly at this same radius from the center
+    // Smaller number = labels closer to center.
+    // Bigger number = labels farther outward.
     const labelR = 198;
 
     const sliceAngle = 360 / hazards.length;
@@ -428,12 +456,20 @@
 
       const labelPoint = polarToCartesian(labelR, midAngle);
 
+      // Labels go around the circle, but stay right-side up.
+      let labelRotation = midAngle;
+
+      if (labelRotation > 90 && labelRotation < 270) {
+        labelRotation += 180;
+      }
+
       const label = makeSvgElement("text", {
         x: labelPoint.x,
         y: labelPoint.y,
         "text-anchor": "middle",
         "dominant-baseline": "middle",
-        class: "outer-label"
+        class: "outer-label",
+        transform: `rotate(${labelRotation}, ${labelPoint.x}, ${labelPoint.y})`
       });
 
       label.textContent = hazard.name;
