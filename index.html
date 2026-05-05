@@ -91,44 +91,89 @@
       stroke-width: 3;
     }
 
+    .effect-deco {
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .electrical-spark {
+      fill: none;
+      stroke: #fff36a;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 8px #fff36a);
+    }
+
+    .bio-wave {
+      fill: none;
+      stroke: #73d900;
+      stroke-width: 5;
+      filter: drop-shadow(0 0 8px #73d900);
+    }
+
     .gravity-click {
       animation: gravityShrinkToBase 0.85s ease forwards;
     }
 
     .mechanical-click {
-      animation: mechanicalCircleSpin 0.85s ease forwards;
+      animation: mechanicalCircleSpin 0.95s ease forwards;
     }
 
     .electrical-click {
-      animation: electricalFlash 0.85s ease forwards;
+      animation: electricalFlash 0.95s ease forwards;
+    }
+
+    .electrical-click .spark-1 {
+      animation: sparkOne 0.95s ease-out forwards;
+    }
+
+    .electrical-click .spark-2 {
+      animation: sparkTwo 0.95s ease-out forwards;
+    }
+
+    .electrical-click .spark-3 {
+      animation: sparkThree 0.95s ease-out forwards;
     }
 
     .pressure-click {
-      animation: pressureVibrateBurst 0.85s ease forwards;
+      animation: pressureVibrateBurst 0.9s ease forwards;
     }
 
     .temperature-click {
-      animation: temperatureRise 0.85s ease forwards;
+      animation: temperatureRise 0.95s ease forwards;
     }
 
     .temperature-click .wedge {
-      animation: temperatureWedgeRed 0.85s ease forwards;
+      animation: temperatureWedgeRed 0.95s ease forwards;
     }
 
     .temperature-click .icon-circle {
-      animation: temperatureIconRed 0.85s ease forwards;
+      animation: temperatureIconRed 0.95s ease forwards;
     }
 
     .chemical-click {
-      animation: chemicalDisintegrate 0.85s ease forwards;
+      animation: chemicalDisintegrate 0.95s ease forwards;
     }
 
     .biological-click {
-      animation: biologicalPulse 0.85s ease forwards;
+      animation: biologicalPulse 1s ease forwards;
+    }
+
+    .biological-click .wave-1 {
+      animation: bioWave 1s ease-out forwards;
+    }
+
+    .biological-click .wave-2 {
+      animation: bioWave 1s ease-out 0.12s forwards;
+    }
+
+    .biological-click .wave-3 {
+      animation: bioWave 1s ease-out 0.24s forwards;
     }
 
     .radiation-click {
-      animation: radiationGlowLow 0.85s ease forwards;
+      animation: radiationSlowGlow 1.1s ease-in-out forwards;
     }
 
     .sound-click {
@@ -163,17 +208,17 @@
         transform: translate(0px, 0px) rotate(0deg) scale(1);
         filter: brightness(1);
       }
-      25% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(120deg) scale(1.04);
-        filter: brightness(1.15);
+      20% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(120deg) scale(1.03);
       }
-      50% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(240deg) scale(1.06);
-        filter: brightness(1.2);
+      40% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(240deg) scale(1.05);
       }
-      75% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(360deg) scale(1.04);
-        filter: brightness(1.15);
+      60% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(360deg) scale(1.06);
+      }
+      80% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(540deg) scale(1.03);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) rotate(720deg) scale(1);
@@ -186,21 +231,78 @@
         transform: translate(0px, 0px) scale(1);
         filter: brightness(1);
       }
-      25% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.08);
-        filter: brightness(2) drop-shadow(0 0 16px #ffff66);
-      }
-      50% {
-        transform: translate(var(--move-x), var(--move-y)) scale(0.98);
-        filter: brightness(1.1);
-      }
-      75% {
+      20% {
         transform: translate(var(--move-x), var(--move-y)) scale(1.06);
-        filter: brightness(2) drop-shadow(0 0 16px #ffff66);
+        filter: brightness(2.2) drop-shadow(0 0 18px #ffff66);
+      }
+      45% {
+        transform: translate(var(--move-x), var(--move-y)) scale(0.99);
+        filter: brightness(1.15);
+      }
+      70% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.05);
+        filter: brightness(2) drop-shadow(0 0 18px #ffff66);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
         filter: brightness(1.2);
+      }
+    }
+
+    @keyframes sparkOne {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      20% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+      50% {
+        opacity: 0.9;
+        transform: scale(1.35);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.6);
+      }
+    }
+
+    @keyframes sparkTwo {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      28% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      55% {
+        opacity: 0.85;
+        transform: scale(1.25);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.55);
+      }
+    }
+
+    @keyframes sparkThree {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      35% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      62% {
+        opacity: 0.8;
+        transform: scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
       }
     }
 
@@ -307,11 +409,11 @@
         filter: brightness(1);
       }
       30% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.12);
+        transform: translate(var(--move-x), var(--move-y)) scale(1.08);
         filter: brightness(1.35) drop-shadow(0 0 14px #73d900);
       }
       60% {
-        transform: translate(var(--move-x), var(--move-y)) scale(0.95);
+        transform: translate(var(--move-x), var(--move-y)) scale(0.98);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
@@ -319,26 +421,45 @@
       }
     }
 
-    @keyframes radiationGlowLow {
+    @keyframes bioWave {
+      0% {
+        opacity: 0;
+        stroke-width: 7;
+        transform: scale(0.35);
+      }
+      20% {
+        opacity: 0.95;
+      }
+      60% {
+        opacity: 0.65;
+      }
+      100% {
+        opacity: 0;
+        stroke-width: 2;
+        transform: scale(1.9);
+      }
+    }
+
+    @keyframes radiationSlowGlow {
       0% {
         transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
+        filter: brightness(0.95) drop-shadow(0 0 2px #73d900);
       }
       25% {
-        transform: translate(0px, 0px) scale(1.03);
-        filter: brightness(2.4) drop-shadow(0 0 24px #73d900);
+        transform: translate(0px, 0px) scale(1.01);
+        filter: brightness(1.5) drop-shadow(0 0 10px #73d900);
       }
       50% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(0.85) drop-shadow(0 0 5px #73d900);
+        transform: translate(0px, 0px) scale(1.02);
+        filter: brightness(2.1) drop-shadow(0 0 20px #73d900);
       }
       75% {
-        transform: translate(0px, 0px) scale(1.03);
-        filter: brightness(2.1) drop-shadow(0 0 20px #73d900);
+        transform: translate(0px, 0px) scale(1.01);
+        filter: brightness(1.45) drop-shadow(0 0 10px #73d900);
       }
       100% {
         transform: translate(0px, 0px) scale(1);
-        filter: brightness(0.9) drop-shadow(0 0 6px #73d900);
+        filter: brightness(0.95) drop-shadow(0 0 3px #73d900);
       }
     }
 
@@ -398,7 +519,7 @@
 </head>
 
 <body>
-  <h1>Energy Wheel</h1>
+  <h1>Safety Basics Hazard Wheel</h1>
   <p>Click a hazard category to learn more.</p>
 
   <svg id="wheel" viewBox="0 0 500 500"></svg>
@@ -440,9 +561,7 @@
     const outerR = 185;
     const ringR = 225;
     const iconR = 135;
-
     const labelR = 198;
-
     const sliceAngle = 360 / hazards.length;
 
     function polarToCartesian(radius, angleDeg) {
@@ -500,6 +619,56 @@
 
       const iconPoint = polarToCartesian(iconR, midAngle);
 
+      group.appendChild(path);
+
+      if (hazard.name === "Biological") {
+        const wave1 = makeSvgElement("circle", {
+          cx: iconPoint.x,
+          cy: iconPoint.y,
+          r: 18,
+          class: "effect-deco bio-wave wave-1"
+        });
+
+        const wave2 = makeSvgElement("circle", {
+          cx: iconPoint.x,
+          cy: iconPoint.y,
+          r: 18,
+          class: "effect-deco bio-wave wave-2"
+        });
+
+        const wave3 = makeSvgElement("circle", {
+          cx: iconPoint.x,
+          cy: iconPoint.y,
+          r: 18,
+          class: "effect-deco bio-wave wave-3"
+        });
+
+        group.appendChild(wave1);
+        group.appendChild(wave2);
+        group.appendChild(wave3);
+      }
+
+      if (hazard.name === "Electrical") {
+        const spark1 = makeSvgElement("polyline", {
+          points: `${iconPoint.x - 20},${iconPoint.y - 28} ${iconPoint.x - 6},${iconPoint.y - 10} ${iconPoint.x - 14},${iconPoint.y - 10} ${iconPoint.x - 2},${iconPoint.y + 8}`,
+          class: "effect-deco electrical-spark spark-1"
+        });
+
+        const spark2 = makeSvgElement("polyline", {
+          points: `${iconPoint.x + 22},${iconPoint.y - 18} ${iconPoint.x + 8},${iconPoint.y - 2} ${iconPoint.x + 16},${iconPoint.y - 2} ${iconPoint.x + 2},${iconPoint.y + 16}`,
+          class: "effect-deco electrical-spark spark-2"
+        });
+
+        const spark3 = makeSvgElement("polyline", {
+          points: `${iconPoint.x - 4},${iconPoint.y + 30} ${iconPoint.x + 8},${iconPoint.y + 12} ${iconPoint.x + 1},${iconPoint.y + 12} ${iconPoint.x + 14},${iconPoint.y - 6}`,
+          class: "effect-deco electrical-spark spark-3"
+        });
+
+        group.appendChild(spark1);
+        group.appendChild(spark2);
+        group.appendChild(spark3);
+      }
+
       const iconCircle = makeSvgElement("circle", {
         cx: iconPoint.x,
         cy: iconPoint.y,
@@ -516,7 +685,6 @@
 
       iconText.textContent = hazard.icon;
 
-      group.appendChild(path);
       group.appendChild(iconCircle);
       group.appendChild(iconText);
 
@@ -529,7 +697,6 @@
       const labelPoint = polarToCartesian(labelR, midAngle);
 
       let labelRotation = midAngle;
-
       if (labelRotation > 90 && labelRotation < 270) {
         labelRotation += 180;
       }
@@ -618,7 +785,7 @@
       setTimeout(function () {
         window.location.href =
           "details.html?hazard=" + encodeURIComponent(hazardName);
-      }, 900);
+      }, 1150);
     }
   </script>
 </body>
