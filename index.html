@@ -206,12 +206,21 @@
 
       const labelPoint = polarToCartesian(labelR, midAngle);
 
+      // Move specific labels lower without moving all labels
+      const labelOffsets = {
+        "Radiation": 12,
+        "Motion": 12
+      };
+
+      const extraLabelY = labelOffsets[hazard.name] || 0;
+      const adjustedLabelY = labelPoint.y + extraLabelY;
+
       const label = makeSvgElement("text", {
         x: labelPoint.x,
-        y: labelPoint.y,
+        y: adjustedLabelY,
         "text-anchor": "middle",
         class: "outer-label",
-        transform: `rotate(${midAngle}, ${labelPoint.x}, ${labelPoint.y})`
+        transform: `rotate(${midAngle}, ${labelPoint.x}, ${adjustedLabelY})`
       });
 
       label.textContent = hazard.name;
