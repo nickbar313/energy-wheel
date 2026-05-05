@@ -340,7 +340,7 @@
     const ringR = 225;
     const iconR = 135;
 
-    // Smaller number = outside labels closer to center.
+    // All labels sit evenly at this same radius from the center
     const labelR = 198;
 
     const sliceAngle = 360 / hazards.length;
@@ -428,19 +428,12 @@
 
       const labelPoint = polarToCartesian(labelR, midAngle);
 
-      // Keeps every outside label right-side up.
-      let labelRotation = midAngle;
-
-      if (labelRotation > 90 && labelRotation < 270) {
-        labelRotation += 180;
-      }
-
       const label = makeSvgElement("text", {
         x: labelPoint.x,
         y: labelPoint.y,
         "text-anchor": "middle",
-        class: "outer-label",
-        transform: `rotate(${labelRotation}, ${labelPoint.x}, ${labelPoint.y})`
+        "dominant-baseline": "middle",
+        class: "outer-label"
       });
 
       label.textContent = hazard.name;
