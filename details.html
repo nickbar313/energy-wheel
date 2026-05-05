@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Energy Wheel</title>
+  <title>Safety Basics Hazard Wheel</title>
 
   <style>
     body {
@@ -637,6 +637,10 @@
         "data-angle": midAngle
       });
 
+      group.addEventListener("click", function () {
+        handleSliceClick(group, hazard.name, midAngle);
+      });
+
       const path = makeSvgElement("path", {
         d: describeSlice(startAngle, endAngle),
         class: "wedge"
@@ -730,17 +734,6 @@
 
       label.textContent = hazard.name;
       svg.appendChild(label);
-    });
-
-    svg.addEventListener("click", function (event) {
-      const group = event.target.closest(".slice");
-
-      if (!group) return;
-
-      const hazardName = group.getAttribute("data-name");
-      const angle = Number(group.getAttribute("data-angle"));
-
-      handleSliceClick(group, hazardName, angle);
     });
 
     svg.appendChild(makeSvgElement("circle", {
