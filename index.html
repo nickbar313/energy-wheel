@@ -90,8 +90,6 @@
       stroke-width: 3;
     }
 
-    /* Different click animations by hazard type */
-
     .gravity-click {
       animation: gravityDrop 0.75s ease forwards;
     }
@@ -430,12 +428,19 @@
 
       const labelPoint = polarToCartesian(labelR, midAngle);
 
+      // Keeps every outside label right-side up.
+      let labelRotation = midAngle;
+
+      if (labelRotation > 90 && labelRotation < 270) {
+        labelRotation += 180;
+      }
+
       const label = makeSvgElement("text", {
         x: labelPoint.x,
         y: labelPoint.y,
         "text-anchor": "middle",
         class: "outer-label",
-        transform: `rotate(${midAngle}, ${labelPoint.x}, ${labelPoint.y})`
+        transform: `rotate(${labelRotation}, ${labelPoint.x}, ${labelPoint.y})`
       });
 
       label.textContent = hazard.name;
