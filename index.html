@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Safety Basics Hazard Wheel</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    p {
+      color: #ddd;
+    }
+
+    svg {
+      width: 95vw;
+      max-width: 650px;
+      height: auto;
+    }
+
+    .slice {
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      transform-box: view-box;
+      transform-origin: center;
+    }
+
+    .slice:hover .wedge {
+      fill: #eaffd8;
+    }
+
+    .slice.selected {
+      filter: drop-shadow(0 0 12px #7cff00);
+    }
+
+    .wedge {
+      fill: #f4f4ef;
+      stroke: #12332b;
+      stroke-width: 3;
+    }
+
+    .outer-ring {
+      fill: #102b26;
+      stroke: #6dde00;
+      stroke-width: 6;
+    }
+
+    .icon-circle {
+      fill: #73d900;
+    }
+
+    .icon-text {
+      font-size: 24px;
+      font-weight: bold;
+      fill: #12332b;
+      pointer-events: none;
+    }
+
+    .outer-label {
+      fill: white;
+      font-size: 13px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .center-circle {
+      fill: #f4f4ef;
+      stroke: #12332b;
+      stroke-width: 8;
+    }
+
+    .center-text {
+      fill: #12332b;
+      font-size: 14px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .center-warning {
+      fill: #73d900;
+      stroke: #12332b;
+      stroke-width: 3;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Safety Basics Hazard Wheel</h1>
+  <p>Click a hazard category to learn more.</p>
+
+  <svg id="wheel" viewBox="0 0 500 500"></svg>
+
+  <script>
+    const hazards = [
+      { name: "Gravity", icon: "⬇" },
+      { name: "Mechanical", icon: "⚙" },
+      { name: "Electrical", icon: "⚡" },
+      { name: "Pressure", icon: "⏱" },
+      { name: "Temperature", icon: "🌡" },
+      { name: "Chemical", icon: "⚗" },
+      { name: "Biological", icon: "☣" },
+      { name: "Radiation", icon: "☢" },
+      { name: "Sound", icon: "🔊" },
+      { name: "Motion", icon: "↔" }
+    ];
+
+    const svg = document.getElementById("wheel");
+
+    const cx = 250;
+    const cy = 250;
+    const innerR = 85;
+    const outerR = 185;
+    const ringR = 225;
+    const iconR = 135;
+    const labelR = 213;
+    const sliceAngle = 360 / hazards.length;
+
+    function polarToCartesian(radius, angleDeg) {
+      const angleRad = (angleDeg - 90) * Math.PI / 180;
+      return {
+        x: cx + radius * Math.cos(angleRad),
+        y: cy + radius * Math.sin(angleRad)
+      };
+    }
+
+    function describeSlice(startAngle, endAngle) {
+      const outerStart = polarToCartesian(outerR, startAngle);
+      const outerEnd = polarToCartesian(outerR, endAngle);
+      const innerStart = polarToCartesian(innerR, startAngle);
+      const innerEnd = polarToCartesian(innerR, endAngle);
+
+      return `
+        M ${outerStart.x} ${outerStart.y}
+        A ${outerR} ${outerR} 0 0 1 ${outerEnd.x} ${outerEnd.y}
+        L ${innerEnd.x} ${innerEnd.y}
+        A ${innerR} ${innerR} 0 0 0 ${innerStart.x} ${innerStart.y}
+        Z
+      `;
+    }
+
+    function makeSvgElement(tag, attrs) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      for (const key in attrs) {
+        el.setAttribute(key, attrs[key]);
+      }
+      return el;
+    }
+
+    svg.appendChild(makeSvgElement("circle", {
+      cx,
+      cy,
+      r: ringR,
+      class: "outer-ring"
+    }));
+
+    hazards.forEach((hazard, index) => {
+      const startAngle = index * sliceAngle - sliceAngle / 2;
+      const endAngle = startAngle + sliceAngle;
+      const midAngle = startAngle + sliceAngle / 2;
+
+      const group = makeSvgElement("g", {
+        class: "slice",
+        "data-name": hazard.name
+      });
+
+      const path = makeSvgElement("path", {
+        d: describeSlice(startAngle, endAngle),
+        class: "wedge"
+      });
+
+      const iconPoint = polarToCartesian(iconR, midAngle);
+
+      const iconCircle = makeSvgElement("circle", {
+        cx: iconPoint.x,
+        cy: iconPoint.y,
+        r: 28,
+        class: "icon-circle"
+      });
+
+      const iconText = makeSvgElement("text", {
+        x: iconPoint.x,
+        y: iconPoint.y + 8,
+        "text-anchor": "middle",
+        class: "icon-text"
+      });
+
+      iconText.textContent = hazard.icon;
+
+      group.appendChild(path);
+      group.appendChild(iconCircle);
+      group.appendChild(iconText);
+
+      group.addEventListener("click", function () {
+        handleSliceClick(group, hazard.name, midAngle);
+      });
+
+      svg.appendChild(group);
+
+      const labelPoint = polarToCartesian(labelR, midAngle);
+
+      const label = makeSvgElement("text", {
+        x: labelPoint.x,
+        y: labelPoint.y,
+        "text-anchor": "middle",
+        class: "outer-label",
+        transform: `rotate(${midAngle}, ${labelPoint.x}, ${labelPoint.y})`
+      });
+
+      label.textContent = hazard.name;
+      svg.appendChild(label);
+    });
+
+    svg.appendChild(makeSvgElement("circle", {
+      cx,
+      cy,
+      r: 68,
+      class: "center-circle"
+    }));
+
+    svg.appendChild(makeSvgElement("path", {
+      d: "M250 185 L305 285 L195 285 Z",
+      class: "center-warning"
+    }));
+
+    const exclamation = makeSvgElement("text", {
+      x: 250,
+      y: 245,
+      "text-anchor": "middle",
+      class: "center-text"
+    });
+    exclamation.textContent = "!";
+    exclamation.setAttribute("font-size", "32");
+    svg.appendChild(exclamation);
+
+    const centerText1 = makeSvgElement("text", {
+      x: 250,
+      y: 268,
+      "text-anchor": "middle",
+      class: "center-text"
+    });
+    centerText1.textContent = "Safety";
+    svg.appendChild(centerText1);
+
+    const centerText2 = makeSvgElement("text", {
+      x: 250,
+      y: 285,
+      "text-anchor": "middle",
+      class: "center-text"
+    });
+    centerText2.textContent = "basics";
+    svg.appendChild(centerText2);
+
+    const centerText3 = makeSvgElement("text", {
+      x: 250,
+      y: 315,
+      "text-anchor": "middle",
+      class: "center-text"
+    });
+    centerText3.textContent = "Identify";
+    svg.appendChild(centerText3);
+
+    function handleSliceClick(group, hazardName, angle) {
+      document.querySelectorAll(".slice").forEach(slice => {
+        slice.classList.remove("selected");
+        slice.style.transform = "translate(0px, 0px)";
+      });
+
+      group.classList.add("selected");
+
+      const angleRad = (angle - 90) * Math.PI / 180;
+      const moveX = Math.cos(angleRad) * 16;
+      const moveY = Math.sin(angleRad) * 16;
+
+      group.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
+      setTimeout(function () {
+        window.location.href =
+          "details.html?hazard=" + encodeURIComponent(hazardName);
+      }, 600);
+    }
+  </script>
+</body>
+</html>
