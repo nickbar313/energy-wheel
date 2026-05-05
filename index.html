@@ -28,7 +28,7 @@
 
     .slice {
       cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      transition: filter 0.25s ease;
       transform-box: view-box;
       transform-origin: center;
     }
@@ -89,6 +89,212 @@
       stroke: #12332b;
       stroke-width: 3;
     }
+
+    /* Different click animations by hazard type */
+
+    .gravity-click {
+      animation: gravityDrop 0.75s ease forwards;
+    }
+
+    .mechanical-click {
+      animation: mechanicalTurn 0.75s ease forwards;
+    }
+
+    .electrical-click {
+      animation: electricalFlash 0.75s ease forwards;
+    }
+
+    .pressure-click {
+      animation: pressureBurst 0.75s ease forwards;
+    }
+
+    .temperature-click {
+      animation: heatWave 0.75s ease forwards;
+    }
+
+    .chemical-click {
+      animation: chemicalBubble 0.75s ease forwards;
+    }
+
+    .biological-click {
+      animation: biologicalPulse 0.75s ease forwards;
+    }
+
+    .radiation-click {
+      animation: radiationSpin 0.75s ease forwards;
+    }
+
+    .sound-click {
+      animation: soundWave 0.75s ease forwards;
+    }
+
+    .motion-click {
+      animation: motionSlide 0.75s ease forwards;
+    }
+
+    @keyframes gravityDrop {
+      0% {
+        transform: translate(0px, 0px);
+      }
+      45% {
+        transform: translate(var(--move-x), calc(var(--move-y) + 18px)) scale(1.04);
+      }
+      70% {
+        transform: translate(var(--move-x), calc(var(--move-y) - 5px)) scale(0.98);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+      }
+    }
+
+    @keyframes mechanicalTurn {
+      0% {
+        transform: translate(0px, 0px) rotate(0deg);
+      }
+      50% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(12deg) scale(1.04);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(0deg) scale(1);
+      }
+    }
+
+    @keyframes electricalFlash {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+        filter: brightness(1);
+      }
+      25% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.08);
+        filter: brightness(2) drop-shadow(0 0 16px #ffff66);
+      }
+      50% {
+        transform: translate(var(--move-x), var(--move-y)) scale(0.98);
+        filter: brightness(1.1);
+      }
+      75% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.06);
+        filter: brightness(2) drop-shadow(0 0 16px #ffff66);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+        filter: brightness(1.2);
+      }
+    }
+
+    @keyframes pressureBurst {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+      }
+      40% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.14);
+      }
+      70% {
+        transform: translate(var(--move-x), var(--move-y)) scale(0.96);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+      }
+    }
+
+    @keyframes heatWave {
+      0% {
+        transform: translate(0px, 0px) skewX(0deg);
+        filter: brightness(1);
+      }
+      30% {
+        transform: translate(var(--move-x), var(--move-y)) skewX(5deg) scale(1.04);
+        filter: brightness(1.4);
+      }
+      60% {
+        transform: translate(var(--move-x), var(--move-y)) skewX(-5deg) scale(1.03);
+        filter: brightness(1.25);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) skewX(0deg) scale(1);
+        filter: brightness(1.1);
+      }
+    }
+
+    @keyframes chemicalBubble {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+      }
+      30% {
+        transform: translate(var(--move-x), calc(var(--move-y) - 10px)) scale(1.07);
+      }
+      60% {
+        transform: translate(var(--move-x), calc(var(--move-y) + 5px)) scale(0.98);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+      }
+    }
+
+    @keyframes biologicalPulse {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+        filter: brightness(1);
+      }
+      35% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.1);
+        filter: brightness(1.35) drop-shadow(0 0 14px #73d900);
+      }
+      70% {
+        transform: translate(var(--move-x), var(--move-y)) scale(0.97);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+      }
+    }
+
+    @keyframes radiationSpin {
+      0% {
+        transform: translate(0px, 0px) rotate(0deg) scale(1);
+      }
+      45% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(18deg) scale(1.08);
+        filter: drop-shadow(0 0 16px #73d900);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) rotate(0deg) scale(1);
+      }
+    }
+
+    @keyframes soundWave {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+        filter: brightness(1);
+      }
+      25% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.03);
+      }
+      50% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.12);
+        filter: brightness(1.45);
+      }
+      75% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.03);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+      }
+    }
+
+    @keyframes motionSlide {
+      0% {
+        transform: translate(0px, 0px);
+      }
+      45% {
+        transform: translate(calc(var(--move-x) * 2), var(--move-y)) scale(1.04);
+      }
+      70% {
+        transform: translate(calc(var(--move-x) * 0.7), var(--move-y)) scale(0.98);
+      }
+      100% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+      }
+    }
   </style>
 </head>
 
@@ -112,6 +318,21 @@
       { name: "Motion", icon: "↔" }
     ];
 
+    const animationClasses = {
+      "Gravity": "gravity-click",
+      "Mechanical": "mechanical-click",
+      "Electrical": "electrical-click",
+      "Pressure": "pressure-click",
+      "Temperature": "temperature-click",
+      "Chemical": "chemical-click",
+      "Biological": "biological-click",
+      "Radiation": "radiation-click",
+      "Sound": "sound-click",
+      "Motion": "motion-click"
+    };
+
+    const allAnimationClasses = Object.values(animationClasses);
+
     const svg = document.getElementById("wheel");
 
     const cx = 250;
@@ -121,9 +342,7 @@
     const ringR = 225;
     const iconR = 135;
 
-    // This controls how close the outside labels are to the center.
-    // Smaller number = closer to center.
-    // Bigger number = farther away from center.
+    // Smaller number = outside labels closer to center.
     const labelR = 198;
 
     const sliceAngle = 360 / hazards.length;
@@ -274,8 +493,9 @@
 
     function handleSliceClick(group, hazardName, angle) {
       document.querySelectorAll(".slice").forEach(slice => {
-        slice.classList.remove("selected");
-        slice.style.transform = "translate(0px, 0px)";
+        slice.classList.remove("selected", ...allAnimationClasses);
+        slice.style.removeProperty("--move-x");
+        slice.style.removeProperty("--move-y");
       });
 
       group.classList.add("selected");
@@ -284,12 +504,16 @@
       const moveX = Math.cos(angleRad) * 16;
       const moveY = Math.sin(angleRad) * 16;
 
-      group.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      group.style.setProperty("--move-x", `${moveX}px`);
+      group.style.setProperty("--move-y", `${moveY}px`);
+
+      const animationClass = animationClasses[hazardName];
+      group.classList.add(animationClass);
 
       setTimeout(function () {
         window.location.href =
           "details.html?hazard=" + encodeURIComponent(hazardName);
-      }, 600);
+      }, 850);
     }
   </script>
 </body>
