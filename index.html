@@ -24,6 +24,35 @@
       z-index: 10;
     }
 
+    .randomize-button {
+      position: fixed;
+      right: 34px;
+      top: 165px;
+      z-index: 20;
+      background: #d50000;
+      color: white;
+      border: 2px solid white;
+      border-radius: 14px;
+      padding: 15px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(213, 0, 0, 0.55);
+      transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+    }
+
+    .randomize-button:hover {
+      transform: scale(1.05);
+      filter: brightness(1.15);
+    }
+
+    .randomize-button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      filter: none;
+    }
+
     h1 {
       margin-top: 35px;
     }
@@ -37,6 +66,58 @@
       width: 95vw;
       max-width: 650px;
       height: auto;
+    }
+
+    #wheelSpinGroup {
+      transform-box: view-box;
+      transform-origin: 250px 250px;
+      transition: transform 3.2s cubic-bezier(0.12, 0.72, 0.18, 1);
+    }
+
+    .roulette-ball {
+      opacity: 0;
+      fill: silver;
+      stroke: white;
+      stroke-width: 2;
+      filter: drop-shadow(0 0 8px white);
+      pointer-events: none;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .roulette-ball.drop {
+      animation: rouletteBallDrop 3.2s ease-in-out forwards;
+    }
+
+    @keyframes rouletteBallDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-90px) scale(0.55);
+      }
+      12% {
+        opacity: 1;
+        transform: translateY(-62px) scale(0.75);
+      }
+      32% {
+        opacity: 1;
+        transform: translateY(5px) scale(1.05);
+      }
+      48% {
+        opacity: 1;
+        transform: translateY(-12px) scale(0.95);
+      }
+      66% {
+        opacity: 1;
+        transform: translateY(2px) scale(1);
+      }
+      86% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0px) scale(1);
+      }
     }
 
     .slice {
@@ -173,7 +254,6 @@
       pointer-events: none;
     }
 
-    /* Gravity now uses the old chemical disintegrate effect */
     .gravity-click {
       animation: chemicalDisintegrate 0.95s ease forwards;
     }
@@ -283,488 +363,187 @@
     }
 
     @keyframes mechanicalCircleSpin {
-      0% {
-        transform: translate(0px, 0px) rotate(0deg) scale(1);
-        filter: brightness(1);
-      }
-      20% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(120deg) scale(1.03);
-      }
-      40% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(240deg) scale(1.05);
-      }
-      60% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(360deg) scale(1.06);
-      }
-      80% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(540deg) scale(1.03);
-      }
-      100% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(720deg) scale(1);
-        filter: brightness(1.05);
-      }
+      0% { transform: translate(0px, 0px) rotate(0deg) scale(1); filter: brightness(1); }
+      20% { transform: translate(var(--move-x), var(--move-y)) rotate(120deg) scale(1.03); }
+      40% { transform: translate(var(--move-x), var(--move-y)) rotate(240deg) scale(1.05); }
+      60% { transform: translate(var(--move-x), var(--move-y)) rotate(360deg) scale(1.06); }
+      80% { transform: translate(var(--move-x), var(--move-y)) rotate(540deg) scale(1.03); }
+      100% { transform: translate(var(--move-x), var(--move-y)) rotate(720deg) scale(1); filter: brightness(1.05); }
     }
 
     @keyframes electricalFlash {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
-      }
-      20% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.06);
-        filter: brightness(2.2) drop-shadow(0 0 18px #ffff66);
-      }
-      45% {
-        transform: translate(var(--move-x), var(--move-y)) scale(0.99);
-        filter: brightness(1.15);
-      }
-      70% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.05);
-        filter: brightness(2) drop-shadow(0 0 18px #ffff66);
-      }
-      100% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1);
-        filter: brightness(1.2);
-      }
+      0% { transform: translate(0px, 0px) scale(1); filter: brightness(1); }
+      20% { transform: translate(var(--move-x), var(--move-y)) scale(1.06); filter: brightness(2.2) drop-shadow(0 0 18px #ffff66); }
+      45% { transform: translate(var(--move-x), var(--move-y)) scale(0.99); filter: brightness(1.15); }
+      70% { transform: translate(var(--move-x), var(--move-y)) scale(1.05); filter: brightness(2) drop-shadow(0 0 18px #ffff66); }
+      100% { transform: translate(var(--move-x), var(--move-y)) scale(1); filter: brightness(1.2); }
     }
 
     @keyframes sparkOne {
-      0% {
-        opacity: 0;
-        transform: scale(0.6);
-      }
-      20% {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-      50% {
-        opacity: 0.9;
-        transform: scale(1.35);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.6);
-      }
+      0% { opacity: 0; transform: scale(0.6); }
+      20% { opacity: 1; transform: scale(1.1); }
+      50% { opacity: 0.9; transform: scale(1.35); }
+      100% { opacity: 0; transform: scale(1.6); }
     }
 
     @keyframes sparkTwo {
-      0% {
-        opacity: 0;
-        transform: scale(0.6);
-      }
-      28% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
-      55% {
-        opacity: 0.85;
-        transform: scale(1.25);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.55);
-      }
+      0% { opacity: 0; transform: scale(0.6); }
+      28% { opacity: 1; transform: scale(1.05); }
+      55% { opacity: 0.85; transform: scale(1.25); }
+      100% { opacity: 0; transform: scale(1.55); }
     }
 
     @keyframes sparkThree {
-      0% {
-        opacity: 0;
-        transform: scale(0.6);
-      }
-      35% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
-      62% {
-        opacity: 0.8;
-        transform: scale(1.2);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.5);
-      }
+      0% { opacity: 0; transform: scale(0.6); }
+      35% { opacity: 1; transform: scale(1.05); }
+      62% { opacity: 0.8; transform: scale(1.2); }
+      100% { opacity: 0; transform: scale(1.5); }
     }
 
     @keyframes pressureVibrateBurst {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
-      }
-      15% {
-        transform: translate(5px, -3px) scale(1.02);
-      }
-      30% {
-        transform: translate(-5px, 3px) scale(1.03);
-      }
-      45% {
-        transform: translate(4px, -4px) scale(1.04);
-      }
-      60% {
-        transform: translate(-4px, 4px) scale(1.05);
-        filter: brightness(1.25);
-      }
-      78% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.28);
-        filter: brightness(1.8) drop-shadow(0 0 18px #73d900);
-      }
-      100% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1);
-        filter: brightness(1.15);
-      }
+      0% { transform: translate(0px, 0px) scale(1); filter: brightness(1); }
+      15% { transform: translate(5px, -3px) scale(1.02); }
+      30% { transform: translate(-5px, 3px) scale(1.03); }
+      45% { transform: translate(4px, -4px) scale(1.04); }
+      60% { transform: translate(-4px, 4px) scale(1.05); filter: brightness(1.25); }
+      78% { transform: translate(var(--move-x), var(--move-y)) scale(1.28); filter: brightness(1.8) drop-shadow(0 0 18px #73d900); }
+      100% { transform: translate(var(--move-x), var(--move-y)) scale(1); filter: brightness(1.15); }
     }
 
     @keyframes temperatureRise {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
-      }
-      100% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.04);
-        filter: brightness(1.25);
-      }
+      0% { transform: translate(0px, 0px) scale(1); filter: brightness(1); }
+      100% { transform: translate(var(--move-x), var(--move-y)) scale(1.04); filter: brightness(1.25); }
     }
 
     @keyframes temperatureWedgeRed {
-      0% {
-        fill: #f4f4ef;
-      }
-      35% {
-        fill: #ffd6b3;
-      }
-      70% {
-        fill: #ff8a5c;
-      }
-      100% {
-        fill: #ff3b30;
-      }
+      0% { fill: #f4f4ef; }
+      35% { fill: #ffd6b3; }
+      70% { fill: #ff8a5c; }
+      100% { fill: #ff3b30; }
     }
 
     @keyframes temperatureIconRed {
-      0% {
-        fill: #73d900;
-      }
-      35% {
-        fill: #ffb347;
-      }
-      70% {
-        fill: #ff6b3a;
-      }
-      100% {
-        fill: #ff2d20;
-      }
+      0% { fill: #73d900; }
+      35% { fill: #ffb347; }
+      70% { fill: #ff6b3a; }
+      100% { fill: #ff2d20; }
     }
 
-    /* Old chemical animation, now used by Gravity */
     @keyframes chemicalDisintegrate {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        opacity: 1;
-        filter: blur(0px) brightness(1);
-      }
-      25% {
-        transform: translate(var(--move-x), var(--move-y)) rotate(4deg) scale(1.04);
-        opacity: 0.9;
-        filter: blur(0.5px) brightness(1.2);
-      }
-      50% {
-        transform: translate(var(--move-x), calc(var(--move-y) - 8px)) rotate(-8deg) scale(0.92);
-        opacity: 0.65;
-        filter: blur(1.5px) brightness(1.35);
-      }
-      75% {
-        transform: translate(calc(var(--move-x) + 8px), calc(var(--move-y) - 14px)) rotate(10deg) scale(0.72);
-        opacity: 0.35;
-        filter: blur(3px) brightness(1.1);
-      }
-      100% {
-        transform: translate(calc(var(--move-x) - 10px), calc(var(--move-y) - 20px)) rotate(-12deg) scale(0.5);
-        opacity: 0.12;
-        filter: blur(5px) brightness(0.9);
-      }
+      0% { transform: translate(0px, 0px) scale(1); opacity: 1; filter: blur(0px) brightness(1); }
+      25% { transform: translate(var(--move-x), var(--move-y)) rotate(4deg) scale(1.04); opacity: 0.9; filter: blur(0.5px) brightness(1.2); }
+      50% { transform: translate(var(--move-x), calc(var(--move-y) - 8px)) rotate(-8deg) scale(0.92); opacity: 0.65; filter: blur(1.5px) brightness(1.35); }
+      75% { transform: translate(calc(var(--move-x) + 8px), calc(var(--move-y) - 14px)) rotate(10deg) scale(0.72); opacity: 0.35; filter: blur(3px) brightness(1.1); }
+      100% { transform: translate(calc(var(--move-x) - 10px), calc(var(--move-y) - 20px)) rotate(-12deg) scale(0.5); opacity: 0.12; filter: blur(5px) brightness(0.9); }
     }
 
     @keyframes chemicalAcidMelt {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        opacity: 1;
-        filter: blur(0px) brightness(1);
-      }
-      20% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.03);
-        opacity: 1;
-        filter: blur(0px) brightness(1.15);
-      }
-      45% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1);
-        opacity: 1;
-        filter: blur(0.5px) brightness(1.25);
-      }
-      70% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 8px)) scale(0.88);
-        opacity: 0.75;
-        filter: blur(1.5px) brightness(1.15);
-      }
-      100% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 18px)) scale(0.58);
-        opacity: 0.22;
-        filter: blur(5px) brightness(0.85);
-      }
+      0% { transform: translate(0px, 0px) scale(1); opacity: 1; filter: blur(0px) brightness(1); }
+      20% { transform: translate(var(--move-x), var(--move-y)) scale(1.03); opacity: 1; filter: blur(0px) brightness(1.15); }
+      45% { transform: translate(var(--move-x), var(--move-y)) scale(1); opacity: 1; filter: blur(0.5px) brightness(1.25); }
+      70% { transform: translate(var(--move-x), calc(var(--move-y) + 8px)) scale(0.88); opacity: 0.75; filter: blur(1.5px) brightness(1.15); }
+      100% { transform: translate(var(--move-x), calc(var(--move-y) + 18px)) scale(0.58); opacity: 0.22; filter: blur(5px) brightness(0.85); }
     }
 
     @keyframes chemicalAcidBurn {
-      0% {
-        fill: #f4f4ef;
-      }
-      25% {
-        fill: #eaffd8;
-      }
-      50% {
-        fill: #b7ff66;
-      }
-      75% {
-        fill: #6dde00;
-      }
-      100% {
-        fill: #244018;
-      }
+      0% { fill: #f4f4ef; }
+      25% { fill: #eaffd8; }
+      50% { fill: #b7ff66; }
+      75% { fill: #6dde00; }
+      100% { fill: #244018; }
     }
 
     @keyframes chemicalIconBurn {
-      0% {
-        fill: #73d900;
-      }
-      35% {
-        fill: #9cff2e;
-      }
-      70% {
-        fill: #5faa00;
-      }
-      100% {
-        fill: #244018;
-      }
+      0% { fill: #73d900; }
+      35% { fill: #9cff2e; }
+      70% { fill: #5faa00; }
+      100% { fill: #244018; }
     }
 
     @keyframes acidVialPour {
-      0% {
-        opacity: 0;
-        transform: translate(-18px, -22px) rotate(-35deg) scale(0.7);
-      }
-      20% {
-        opacity: 1;
-        transform: translate(-12px, -18px) rotate(-35deg) scale(1);
-      }
-      55% {
-        opacity: 1;
-        transform: translate(-8px, -14px) rotate(-65deg) scale(1);
-      }
-      80% {
-        opacity: 0.8;
-        transform: translate(-6px, -12px) rotate(-75deg) scale(0.9);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-4px, -10px) rotate(-80deg) scale(0.75);
-      }
+      0% { opacity: 0; transform: translate(-18px, -22px) rotate(-35deg) scale(0.7); }
+      20% { opacity: 1; transform: translate(-12px, -18px) rotate(-35deg) scale(1); }
+      55% { opacity: 1; transform: translate(-8px, -14px) rotate(-65deg) scale(1); }
+      80% { opacity: 0.8; transform: translate(-6px, -12px) rotate(-75deg) scale(0.9); }
+      100% { opacity: 0; transform: translate(-4px, -10px) rotate(-80deg) scale(0.75); }
     }
 
     @keyframes acidStreamPour {
-      0% {
-        opacity: 0;
-        stroke-width: 0;
-      }
-      22% {
-        opacity: 0;
-        stroke-width: 0;
-      }
-      35% {
-        opacity: 1;
-        stroke-width: 3;
-      }
-      65% {
-        opacity: 1;
-        stroke-width: 5;
-      }
-      85% {
-        opacity: 0.7;
-        stroke-width: 4;
-      }
-      100% {
-        opacity: 0;
-        stroke-width: 0;
-      }
+      0% { opacity: 0; stroke-width: 0; }
+      22% { opacity: 0; stroke-width: 0; }
+      35% { opacity: 1; stroke-width: 3; }
+      65% { opacity: 1; stroke-width: 5; }
+      85% { opacity: 0.7; stroke-width: 4; }
+      100% { opacity: 0; stroke-width: 0; }
     }
 
     @keyframes acidDropFall {
-      0% {
-        opacity: 0;
-        transform: translate(-8px, -26px) scale(0.4);
-      }
-      30% {
-        opacity: 1;
-        transform: translate(-5px, -14px) scale(0.75);
-      }
-      55% {
-        opacity: 1;
-        transform: translate(0px, 0px) scale(1);
-      }
-      75% {
-        opacity: 0.8;
-        transform: translate(3px, 9px) scale(1.25);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(5px, 15px) scale(0.3);
-      }
+      0% { opacity: 0; transform: translate(-8px, -26px) scale(0.4); }
+      30% { opacity: 1; transform: translate(-5px, -14px) scale(0.75); }
+      55% { opacity: 1; transform: translate(0px, 0px) scale(1); }
+      75% { opacity: 0.8; transform: translate(3px, 9px) scale(1.25); }
+      100% { opacity: 0; transform: translate(5px, 15px) scale(0.3); }
     }
 
     @keyframes acidPuddleSpread {
-      0% {
-        opacity: 0;
-        transform: scale(0.1);
-      }
-      45% {
-        opacity: 0;
-        transform: scale(0.2);
-      }
-      65% {
-        opacity: 1;
-        transform: scale(0.8);
-      }
-      85% {
-        opacity: 0.8;
-        transform: scale(1.45);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(2);
-      }
+      0% { opacity: 0; transform: scale(0.1); }
+      45% { opacity: 0; transform: scale(0.2); }
+      65% { opacity: 1; transform: scale(0.8); }
+      85% { opacity: 0.8; transform: scale(1.45); }
+      100% { opacity: 0; transform: scale(2); }
     }
 
     @keyframes biologicalBubblePulse {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
-      }
-      35% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.04);
-        filter: brightness(1.25) drop-shadow(0 0 14px #73d900);
-      }
-      70% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.02);
-      }
-      100% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1);
-        filter: brightness(1.08);
-      }
+      0% { transform: translate(0px, 0px) scale(1); filter: brightness(1); }
+      35% { transform: translate(var(--move-x), var(--move-y)) scale(1.04); filter: brightness(1.25) drop-shadow(0 0 14px #73d900); }
+      70% { transform: translate(var(--move-x), var(--move-y)) scale(1.02); }
+      100% { transform: translate(var(--move-x), var(--move-y)) scale(1); filter: brightness(1.08); }
     }
 
     @keyframes bioBubblePop {
-      0% {
-        opacity: 0;
-        transform: translate(0px, 0px) scale(0.1);
-      }
-      15% {
-        opacity: 1;
-        transform: translate(calc(var(--bubble-x) * 0.2), calc(var(--bubble-y) * 0.2)) scale(0.45);
-      }
-      45% {
-        opacity: 0.95;
-        transform: translate(calc(var(--bubble-x) * 0.6), calc(var(--bubble-y) * 0.6)) scale(0.9);
-      }
-      75% {
-        opacity: 0.9;
-        transform: translate(var(--bubble-x), var(--bubble-y)) scale(1.25);
-      }
-      88% {
-        opacity: 1;
-        transform: translate(var(--bubble-x), var(--bubble-y)) scale(1.55);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--bubble-x), var(--bubble-y)) scale(0.15);
-      }
+      0% { opacity: 0; transform: translate(0px, 0px) scale(0.1); }
+      15% { opacity: 1; transform: translate(calc(var(--bubble-x) * 0.2), calc(var(--bubble-y) * 0.2)) scale(0.45); }
+      45% { opacity: 0.95; transform: translate(calc(var(--bubble-x) * 0.6), calc(var(--bubble-y) * 0.6)) scale(0.9); }
+      75% { opacity: 0.9; transform: translate(var(--bubble-x), var(--bubble-y)) scale(1.25); }
+      88% { opacity: 1; transform: translate(var(--bubble-x), var(--bubble-y)) scale(1.55); }
+      100% { opacity: 0; transform: translate(var(--bubble-x), var(--bubble-y)) scale(0.15); }
     }
 
     @keyframes radiationSlowGlow {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(0.95) drop-shadow(0 0 2px #73d900);
-      }
-      25% {
-        transform: translate(0px, 0px) scale(1.01);
-        filter: brightness(1.5) drop-shadow(0 0 10px #73d900);
-      }
-      50% {
-        transform: translate(0px, 0px) scale(1.02);
-        filter: brightness(2.1) drop-shadow(0 0 20px #73d900);
-      }
-      75% {
-        transform: translate(0px, 0px) scale(1.01);
-        filter: brightness(1.45) drop-shadow(0 0 10px #73d900);
-      }
-      100% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(0.95) drop-shadow(0 0 3px #73d900);
-      }
+      0% { transform: translate(0px, 0px) scale(1); filter: brightness(0.95) drop-shadow(0 0 2px #73d900); }
+      25% { transform: translate(0px, 0px) scale(1.01); filter: brightness(1.5) drop-shadow(0 0 10px #73d900); }
+      50% { transform: translate(0px, 0px) scale(1.02); filter: brightness(2.1) drop-shadow(0 0 20px #73d900); }
+      75% { transform: translate(0px, 0px) scale(1.01); filter: brightness(1.45) drop-shadow(0 0 10px #73d900); }
+      100% { transform: translate(0px, 0px) scale(1); filter: brightness(0.95) drop-shadow(0 0 3px #73d900); }
     }
 
     @keyframes soundWave {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
-      }
-      25% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.03);
-      }
-      50% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.12);
-        filter: brightness(1.45);
-      }
-      75% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.03);
-      }
-      100% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1);
-      }
+      0% { transform: translate(0px, 0px) scale(1); filter: brightness(1); }
+      25% { transform: translate(var(--move-x), var(--move-y)) scale(1.03); }
+      50% { transform: translate(var(--move-x), var(--move-y)) scale(1.12); filter: brightness(1.45); }
+      75% { transform: translate(var(--move-x), var(--move-y)) scale(1.03); }
+      100% { transform: translate(var(--move-x), var(--move-y)) scale(1); }
     }
 
     @keyframes motionVibrate {
-      0% {
-        transform: translate(0px, 0px);
-      }
-      10% {
-        transform: translate(5px, 0px);
-      }
-      20% {
-        transform: translate(-5px, 0px);
-      }
-      30% {
-        transform: translate(4px, -2px);
-      }
-      40% {
-        transform: translate(-4px, 2px);
-      }
-      50% {
-        transform: translate(6px, 0px);
-      }
-      60% {
-        transform: translate(-6px, 0px);
-      }
-      70% {
-        transform: translate(3px, -1px);
-      }
-      80% {
-        transform: translate(-3px, 1px);
-      }
-      100% {
-        transform: translate(0px, 0px);
-      }
+      0% { transform: translate(0px, 0px); }
+      10% { transform: translate(5px, 0px); }
+      20% { transform: translate(-5px, 0px); }
+      30% { transform: translate(4px, -2px); }
+      40% { transform: translate(-4px, 2px); }
+      50% { transform: translate(6px, 0px); }
+      60% { transform: translate(-6px, 0px); }
+      70% { transform: translate(3px, -1px); }
+      80% { transform: translate(-3px, 1px); }
+      100% { transform: translate(0px, 0px); }
     }
   </style>
 </head>
 
 <body>
   <img class="company-logo" src="bmd-logo-blk.jpg" alt="Black & McDonald logo">
+
+  <button id="randomizeButton" class="randomize-button">Randomize</button>
 
   <h1>Energy Wheel</h1>
   <p>Click a hazard category to learn more.</p>
@@ -801,6 +580,7 @@
     const allAnimationClasses = Object.values(animationClasses);
 
     const svg = document.getElementById("wheel");
+    const randomizeButton = document.getElementById("randomizeButton");
 
     const cx = 250;
     const cy = 250;
@@ -809,7 +589,12 @@
     const ringR = 225;
     const iconR = 135;
     const labelR = 198;
+    const ballR = 205;
     const sliceAngle = 360 / hazards.length;
+
+    let currentWheelRotation = 0;
+    let randomizing = false;
+    const sliceGroups = [];
 
     function polarToCartesian(radius, angleDeg) {
       const angleRad = (angleDeg - 90) * Math.PI / 180;
@@ -842,7 +627,13 @@
       return el;
     }
 
-    svg.appendChild(makeSvgElement("circle", {
+    const wheelSpinGroup = makeSvgElement("g", {
+      id: "wheelSpinGroup"
+    });
+
+    svg.appendChild(wheelSpinGroup);
+
+    wheelSpinGroup.appendChild(makeSvgElement("circle", {
       cx,
       cy,
       r: ringR,
@@ -861,6 +652,7 @@
 
       group.addEventListener("click", function (event) {
         event.stopPropagation();
+        if (randomizing) return;
         handleSliceClick(group, hazard.name, midAngle);
       });
 
@@ -996,17 +788,23 @@
       label.textContent = hazard.name;
       group.appendChild(label);
 
-      svg.appendChild(group);
+      wheelSpinGroup.appendChild(group);
+
+      sliceGroups.push({
+        group,
+        hazardName: hazard.name,
+        midAngle
+      });
     });
 
-    svg.appendChild(makeSvgElement("circle", {
+    wheelSpinGroup.appendChild(makeSvgElement("circle", {
       cx,
       cy,
       r: 68,
       class: "center-circle"
     }));
 
-    svg.appendChild(makeSvgElement("path", {
+    wheelSpinGroup.appendChild(makeSvgElement("path", {
       d: "M250 185 L305 285 L195 285 Z",
       class: "center-warning"
     }));
@@ -1019,7 +817,7 @@
     });
     exclamation.textContent = "!";
     exclamation.setAttribute("font-size", "32");
-    svg.appendChild(exclamation);
+    wheelSpinGroup.appendChild(exclamation);
 
     const centerText1 = makeSvgElement("text", {
       x: 250,
@@ -1028,7 +826,7 @@
       class: "center-text"
     });
     centerText1.textContent = "Safety";
-    svg.appendChild(centerText1);
+    wheelSpinGroup.appendChild(centerText1);
 
     const centerText2 = makeSvgElement("text", {
       x: 250,
@@ -1037,7 +835,7 @@
       class: "center-text"
     });
     centerText2.textContent = "basics";
-    svg.appendChild(centerText2);
+    wheelSpinGroup.appendChild(centerText2);
 
     const centerText3 = makeSvgElement("text", {
       x: 250,
@@ -1046,7 +844,50 @@
       class: "center-text"
     });
     centerText3.textContent = "Identify";
-    svg.appendChild(centerText3);
+    wheelSpinGroup.appendChild(centerText3);
+
+    const ballPoint = polarToCartesian(ballR, 0);
+    const rouletteBall = makeSvgElement("circle", {
+      id: "rouletteBall",
+      cx: ballPoint.x,
+      cy: ballPoint.y,
+      r: 9,
+      class: "roulette-ball"
+    });
+    svg.appendChild(rouletteBall);
+
+    randomizeButton.addEventListener("click", function () {
+      randomizeWheel();
+    });
+
+    function randomizeWheel() {
+      if (randomizing) return;
+
+      randomizing = true;
+      randomizeButton.disabled = true;
+
+      document.querySelectorAll(".slice").forEach(slice => {
+        slice.classList.remove("selected", ...allAnimationClasses);
+        slice.style.removeProperty("--move-x");
+        slice.style.removeProperty("--move-y");
+      });
+
+      rouletteBall.classList.remove("drop");
+      void rouletteBall.getBoundingClientRect();
+      rouletteBall.classList.add("drop");
+
+      const selectedIndex = Math.floor(Math.random() * sliceGroups.length);
+      const selected = sliceGroups[selectedIndex];
+
+      const targetOffset = ((-selected.midAngle - currentWheelRotation) % 360 + 360) % 360;
+      currentWheelRotation += 1440 + targetOffset;
+
+      wheelSpinGroup.style.transform = `rotate(${currentWheelRotation}deg)`;
+
+      setTimeout(function () {
+        handleSliceClick(selected.group, selected.hazardName, selected.midAngle);
+      }, 3350);
+    }
 
     function handleSliceClick(group, hazardName, angle) {
       const destination = "details.html?hazard=" + encodeURIComponent(hazardName);
