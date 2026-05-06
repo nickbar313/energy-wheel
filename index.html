@@ -24,10 +24,18 @@
       z-index: 10;
     }
 
+    .wheel-stage {
+      position: relative;
+      width: min(95vw, 650px);
+      margin: 0 auto;
+      display: inline-block;
+    }
+
     .randomize-button {
-      position: fixed;
-      right: 34px;
-      top: 165px;
+      position: absolute;
+      left: calc(100% + 18px);
+      top: 50%;
+      transform: translateY(-50%);
       z-index: 20;
       background: #d50000;
       color: white;
@@ -39,18 +47,36 @@
       cursor: pointer;
       box-shadow: 0 0 18px rgba(213, 0, 0, 0.55);
       transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+      white-space: nowrap;
     }
 
     .randomize-button:hover {
-      transform: scale(1.05);
+      transform: translateY(-50%) scale(1.05);
       filter: brightness(1.15);
     }
 
     .randomize-button:disabled {
       opacity: 0.55;
       cursor: not-allowed;
-      transform: none;
+      transform: translateY(-50%);
       filter: none;
+    }
+
+    @media (max-width: 920px) {
+      .randomize-button {
+        position: static;
+        display: block;
+        margin: 14px auto 0;
+        transform: none;
+      }
+
+      .randomize-button:hover {
+        transform: scale(1.05);
+      }
+
+      .randomize-button:disabled {
+        transform: none;
+      }
     }
 
     h1 {
@@ -71,7 +97,28 @@
     #wheelSpinGroup {
       transform-box: view-box;
       transform-origin: 250px 250px;
-      transition: transform 3.2s cubic-bezier(0.12, 0.72, 0.18, 1);
+      transition: transform 4.2s cubic-bezier(0.08, 0.74, 0.12, 1);
+    }
+
+    #ballOrbitGroup {
+      transform-box: view-box;
+      transform-origin: 250px 250px;
+      transition: transform 4.2s cubic-bezier(0.08, 0.68, 0.12, 1);
+      pointer-events: none;
+    }
+
+    .roulette-track {
+      fill: none;
+      stroke: rgba(230, 230, 230, 0.55);
+      stroke-width: 2;
+      stroke-dasharray: 5 7;
+      pointer-events: none;
+    }
+
+    .roulette-track.inner {
+      stroke: rgba(115, 217, 0, 0.35);
+      stroke-width: 1.5;
+      stroke-dasharray: 2 8;
     }
 
     .roulette-ball {
@@ -86,33 +133,37 @@
     }
 
     .roulette-ball.drop {
-      animation: rouletteBallDrop 3.2s ease-in-out forwards;
+      animation: rouletteBallSettle 4.2s ease-in-out forwards;
     }
 
-    @keyframes rouletteBallDrop {
+    @keyframes rouletteBallSettle {
       0% {
         opacity: 0;
-        transform: translateY(-90px) scale(0.55);
+        transform: translateY(-58px) scale(0.55);
       }
-      12% {
+      10% {
         opacity: 1;
-        transform: translateY(-62px) scale(0.75);
+        transform: translateY(-38px) scale(0.8);
       }
-      32% {
+      24% {
         opacity: 1;
-        transform: translateY(5px) scale(1.05);
+        transform: translateY(-8px) scale(1.02);
       }
-      48% {
+      42% {
         opacity: 1;
-        transform: translateY(-12px) scale(0.95);
+        transform: translateY(12px) scale(1.08);
       }
-      66% {
+      58% {
         opacity: 1;
-        transform: translateY(2px) scale(1);
+        transform: translateY(-6px) scale(0.96);
       }
-      86% {
+      76% {
         opacity: 1;
-        transform: translateY(-4px) scale(1);
+        transform: translateY(6px) scale(1.02);
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(-2px) scale(0.98);
       }
       100% {
         opacity: 1;
@@ -543,12 +594,13 @@
 <body>
   <img class="company-logo" src="bmd-logo-blk.jpg" alt="Black & McDonald logo">
 
-  <button id="randomizeButton" class="randomize-button">Randomize</button>
-
   <h1>Energy Wheel</h1>
   <p>Click a hazard category to learn more.</p>
 
-  <svg id="wheel" viewBox="0 0 500 500"></svg>
+  <div class="wheel-stage">
+    <svg id="wheel" viewBox="0 0 500 500"></svg>
+    <button id="randomizeButton" class="randomize-button">Randomize</button>
+  </div>
 
   <script>
     const hazards = [
@@ -593,6 +645,7 @@
     const sliceAngle = 360 / hazards.length;
 
     let currentWheelRotation = 0;
+    let currentBallRotation = 0;
     let randomizing = false;
     const sliceGroups = [];
 
@@ -846,6 +899,24 @@
     centerText3.textContent = "Identify";
     wheelSpinGroup.appendChild(centerText3);
 
+    svg.appendChild(makeSvgElement("circle", {
+      cx,
+      cy,
+      r: ballR,
+      class: "roulette-track"
+    }));
+
+    svg.appendChild(makeSvgElement("circle", {
+      cx,
+      cy,
+      r: ballR - 18,
+      class: "roulette-track inner"
+    }));
+
+    const ballOrbitGroup = makeSvgElement("g", {
+      id: "ballOrbitGroup"
+    });
+
     const ballPoint = polarToCartesian(ballR, 0);
     const rouletteBall = makeSvgElement("circle", {
       id: "rouletteBall",
@@ -854,7 +925,9 @@
       r: 9,
       class: "roulette-ball"
     });
-    svg.appendChild(rouletteBall);
+
+    ballOrbitGroup.appendChild(rouletteBall);
+    svg.appendChild(ballOrbitGroup);
 
     randomizeButton.addEventListener("click", function () {
       randomizeWheel();
@@ -879,14 +952,18 @@
       const selectedIndex = Math.floor(Math.random() * sliceGroups.length);
       const selected = sliceGroups[selectedIndex];
 
-      const targetOffset = ((-selected.midAngle - currentWheelRotation) % 360 + 360) % 360;
-      currentWheelRotation += 1440 + targetOffset;
+      const wheelOffset = ((-selected.midAngle - currentWheelRotation) % 360 + 360) % 360;
+      currentWheelRotation += 1800 + wheelOffset;
+
+      const ballRemainder = ((currentBallRotation % 360) + 360) % 360;
+      currentBallRotation -= 2520 + ballRemainder;
 
       wheelSpinGroup.style.transform = `rotate(${currentWheelRotation}deg)`;
+      ballOrbitGroup.style.transform = `rotate(${currentBallRotation}deg)`;
 
       setTimeout(function () {
         handleSliceClick(selected.group, selected.hazardName, selected.midAngle);
-      }, 3350);
+      }, 4400);
     }
 
     function handleSliceClick(group, hazardName, angle) {
