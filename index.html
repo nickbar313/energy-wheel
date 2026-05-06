@@ -106,11 +106,13 @@
       filter: drop-shadow(0 0 8px #fff36a);
     }
 
-    .bio-wave {
-      fill: none;
+    .bio-bubble {
+      fill: rgba(115, 217, 0, 0.25);
       stroke: #73d900;
-      stroke-width: 5;
+      stroke-width: 2.5;
       filter: drop-shadow(0 0 8px #73d900);
+      transform-box: fill-box;
+      transform-origin: center;
     }
 
     .gravity-click {
@@ -158,19 +160,31 @@
     }
 
     .biological-click {
-      animation: biologicalPulse 1s ease forwards;
+      animation: biologicalBubblePulse 1.4s ease forwards;
     }
 
-    .biological-click .wave-1 {
-      animation: bioWave 1s ease-out forwards;
+    .biological-click .bubble-1 {
+      animation: bioBubblePop 1.4s ease-out 0s forwards;
     }
 
-    .biological-click .wave-2 {
-      animation: bioWave 1s ease-out 0.12s forwards;
+    .biological-click .bubble-2 {
+      animation: bioBubblePop 1.4s ease-out 0.12s forwards;
     }
 
-    .biological-click .wave-3 {
-      animation: bioWave 1s ease-out 0.24s forwards;
+    .biological-click .bubble-3 {
+      animation: bioBubblePop 1.4s ease-out 0.24s forwards;
+    }
+
+    .biological-click .bubble-4 {
+      animation: bioBubblePop 1.4s ease-out 0.36s forwards;
+    }
+
+    .biological-click .bubble-5 {
+      animation: bioBubblePop 1.4s ease-out 0.48s forwards;
+    }
+
+    .biological-click .bubble-6 {
+      animation: bioBubblePop 1.4s ease-out 0.6s forwards;
     }
 
     .radiation-click {
@@ -404,40 +418,48 @@
       }
     }
 
-    @keyframes biologicalPulse {
+    @keyframes biologicalBubblePulse {
       0% {
         transform: translate(0px, 0px) scale(1);
         filter: brightness(1);
       }
-      30% {
-        transform: translate(var(--move-x), var(--move-y)) scale(1.08);
-        filter: brightness(1.35) drop-shadow(0 0 14px #73d900);
+      35% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.04);
+        filter: brightness(1.25) drop-shadow(0 0 14px #73d900);
       }
-      60% {
-        transform: translate(var(--move-x), var(--move-y)) scale(0.98);
+      70% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.02);
       }
       100% {
         transform: translate(var(--move-x), var(--move-y)) scale(1);
-        filter: brightness(1.1);
+        filter: brightness(1.08);
       }
     }
 
-    @keyframes bioWave {
+    @keyframes bioBubblePop {
       0% {
         opacity: 0;
-        stroke-width: 7;
-        transform: scale(0.35);
+        transform: translate(0px, 0px) scale(0.1);
       }
-      20% {
+      15% {
+        opacity: 1;
+        transform: translate(calc(var(--bubble-x) * 0.2), calc(var(--bubble-y) * 0.2)) scale(0.45);
+      }
+      45% {
         opacity: 0.95;
+        transform: translate(calc(var(--bubble-x) * 0.6), calc(var(--bubble-y) * 0.6)) scale(0.9);
       }
-      60% {
-        opacity: 0.65;
+      75% {
+        opacity: 0.9;
+        transform: translate(var(--bubble-x), var(--bubble-y)) scale(1.25);
+      }
+      88% {
+        opacity: 1;
+        transform: translate(var(--bubble-x), var(--bubble-y)) scale(1.55);
       }
       100% {
         opacity: 0;
-        stroke-width: 2;
-        transform: scale(1.9);
+        transform: translate(var(--bubble-x), var(--bubble-y)) scale(0.15);
       }
     }
 
@@ -520,7 +542,7 @@
 </head>
 
 <body>
-  <h1>Safety Basics Hazard Wheel</h1>
+  <h1>Energy Wheel</h1>
   <p>Click a hazard category to learn more.</p>
 
   <svg id="wheel" viewBox="0 0 500 500"></svg>
@@ -628,30 +650,26 @@
       group.appendChild(path);
 
       if (hazard.name === "Biological") {
-        const wave1 = makeSvgElement("circle", {
-          cx: iconPoint.x,
-          cy: iconPoint.y,
-          r: 18,
-          class: "effect-deco bio-wave wave-1"
-        });
+        const bubbleData = [
+          { className: "bubble-1", r: 5, x: -6, y: -30 },
+          { className: "bubble-2", r: 7, x: 11, y: -38 },
+          { className: "bubble-3", r: 4, x: -16, y: -21 },
+          { className: "bubble-4", r: 6, x: 18, y: -24 },
+          { className: "bubble-5", r: 5, x: 2, y: -46 },
+          { className: "bubble-6", r: 3.5, x: -2, y: -16 }
+        ];
 
-        const wave2 = makeSvgElement("circle", {
-          cx: iconPoint.x,
-          cy: iconPoint.y,
-          r: 18,
-          class: "effect-deco bio-wave wave-2"
-        });
+        bubbleData.forEach(bubble => {
+          const bubbleEl = makeSvgElement("circle", {
+            cx: iconPoint.x,
+            cy: iconPoint.y,
+            r: bubble.r,
+            class: `effect-deco bio-bubble ${bubble.className}`,
+            style: `--bubble-x: ${bubble.x}px; --bubble-y: ${bubble.y}px;`
+          });
 
-        const wave3 = makeSvgElement("circle", {
-          cx: iconPoint.x,
-          cy: iconPoint.y,
-          r: 18,
-          class: "effect-deco bio-wave wave-3"
+          group.appendChild(bubbleEl);
         });
-
-        group.appendChild(wave1);
-        group.appendChild(wave2);
-        group.appendChild(wave3);
       }
 
       if (hazard.name === "Electrical") {
@@ -711,11 +729,8 @@
       });
 
       label.textContent = hazard.name;
-
-      // Important: label is inside the same clickable group as the slice
       group.appendChild(label);
 
-      // Important: add the full group after wedge, icon, effects, and label are inside it
       svg.appendChild(group);
     });
 
@@ -792,9 +807,11 @@
         group.classList.add(animationClass);
       }
 
+      const navigationDelay = hazardName === "Biological" ? 2100 : 850;
+
       setTimeout(function () {
         window.location.href = destination;
-      }, 850);
+      }, navigationDelay);
     }
   </script>
 </body>
