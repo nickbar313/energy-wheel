@@ -10,10 +10,23 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
+      position: relative;
+    }
+
+    .company-logo {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 190px;
+      height: auto;
+      background: white;
+      padding: 6px;
+      border-radius: 4px;
+      z-index: 10;
     }
 
     h1 {
-      margin-top: 20px;
+      margin-top: 110px;
     }
 
     p {
@@ -542,7 +555,9 @@
 </head>
 
 <body>
-  <h1>Energy Wheel</h1>
+  <img class="company-logo" src="bmd-logo.jpg" alt="Black & McDonald logo">
+
+  <h1>Safety Basics Hazard Wheel</h1>
   <p>Click a hazard category to learn more.</p>
 
   <svg id="wheel" viewBox="0 0 500 500"></svg>
