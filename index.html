@@ -68,7 +68,8 @@
       fill: white;
       font-size: 13px;
       font-weight: bold;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
       dominant-baseline: middle;
     }
 
@@ -612,6 +613,11 @@
         "data-name": hazard.name
       });
 
+      group.addEventListener("click", function (event) {
+        event.stopPropagation();
+        handleSliceClick(group, hazard.name, midAngle);
+      });
+
       const path = makeSvgElement("path", {
         d: describeSlice(startAngle, endAngle),
         class: "wedge"
@@ -688,12 +694,6 @@
       group.appendChild(iconCircle);
       group.appendChild(iconText);
 
-      group.addEventListener("click", function () {
-        handleSliceClick(group, hazard.name, midAngle);
-      });
-
-      svg.appendChild(group);
-
       const labelPoint = polarToCartesian(labelR, midAngle);
 
       let labelRotation = midAngle;
@@ -711,7 +711,12 @@
       });
 
       label.textContent = hazard.name;
-      svg.appendChild(label);
+
+      // Important: label is inside the same clickable group as the slice
+      group.appendChild(label);
+
+      // Important: add the full group after wedge, icon, effects, and label are inside it
+      svg.appendChild(group);
     });
 
     svg.appendChild(makeSvgElement("circle", {
@@ -764,6 +769,8 @@
     svg.appendChild(centerText3);
 
     function handleSliceClick(group, hazardName, angle) {
+      const destination = "details.html?hazard=" + encodeURIComponent(hazardName);
+
       document.querySelectorAll(".slice").forEach(slice => {
         slice.classList.remove("selected", ...allAnimationClasses);
         slice.style.removeProperty("--move-x");
@@ -780,12 +787,14 @@
       group.style.setProperty("--move-y", `${moveY}px`);
 
       const animationClass = animationClasses[hazardName];
-      group.classList.add(animationClass);
+
+      if (animationClass) {
+        group.classList.add(animationClass);
+      }
 
       setTimeout(function () {
-        window.location.href =
-          "details.html?hazard=" + encodeURIComponent(hazardName);
-      }, 1150);
+        window.location.href = destination;
+      }, 850);
     }
   </script>
 </body>
