@@ -128,8 +128,54 @@
       transform-origin: center;
     }
 
+    .acid-vial {
+      opacity: 0;
+      fill: none;
+      stroke: #73d900;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 8px #73d900);
+      transform-box: fill-box;
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    .acid-stream {
+      opacity: 0;
+      fill: none;
+      stroke: #9cff2e;
+      stroke-width: 4;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 8px #9cff2e);
+      transform-box: fill-box;
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    .acid-drop {
+      opacity: 0;
+      fill: #73d900;
+      filter: drop-shadow(0 0 8px #73d900);
+      transform-box: fill-box;
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    .acid-puddle {
+      opacity: 0;
+      fill: rgba(115, 217, 0, 0.45);
+      stroke: #73d900;
+      stroke-width: 2;
+      filter: drop-shadow(0 0 10px #73d900);
+      transform-box: fill-box;
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    /* Gravity now uses the old chemical disintegrate effect */
     .gravity-click {
-      animation: gravityShrinkToBase 0.85s ease forwards;
+      animation: chemicalDisintegrate 0.95s ease forwards;
     }
 
     .mechanical-click {
@@ -169,7 +215,31 @@
     }
 
     .chemical-click {
-      animation: chemicalDisintegrate 0.95s ease forwards;
+      animation: chemicalAcidMelt 1.65s ease forwards;
+    }
+
+    .chemical-click .wedge {
+      animation: chemicalAcidBurn 1.65s ease forwards;
+    }
+
+    .chemical-click .icon-circle {
+      animation: chemicalIconBurn 1.65s ease forwards;
+    }
+
+    .chemical-click .acid-vial {
+      animation: acidVialPour 1.65s ease forwards;
+    }
+
+    .chemical-click .acid-stream {
+      animation: acidStreamPour 1.65s ease forwards;
+    }
+
+    .chemical-click .acid-drop {
+      animation: acidDropFall 1.65s ease forwards;
+    }
+
+    .chemical-click .acid-puddle {
+      animation: acidPuddleSpread 1.65s ease forwards;
     }
 
     .biological-click {
@@ -210,25 +280,6 @@
 
     .motion-click {
       animation: motionVibrate 0.85s ease forwards;
-    }
-
-    @keyframes gravityShrinkToBase {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-        filter: brightness(1);
-      }
-      35% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 18px)) scale(0.9);
-        filter: brightness(1.15);
-      }
-      70% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 32px)) scale(0.65);
-        filter: brightness(0.95);
-      }
-      100% {
-        transform: translate(var(--move-x), calc(var(--move-y) + 38px)) scale(0.55);
-        filter: brightness(0.85);
-      }
     }
 
     @keyframes mechanicalCircleSpin {
@@ -403,6 +454,7 @@
       }
     }
 
+    /* Old chemical animation, now used by Gravity */
     @keyframes chemicalDisintegrate {
       0% {
         transform: translate(0px, 0px) scale(1);
@@ -428,6 +480,163 @@
         transform: translate(calc(var(--move-x) - 10px), calc(var(--move-y) - 20px)) rotate(-12deg) scale(0.5);
         opacity: 0.12;
         filter: blur(5px) brightness(0.9);
+      }
+    }
+
+    @keyframes chemicalAcidMelt {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+        opacity: 1;
+        filter: blur(0px) brightness(1);
+      }
+      20% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1.03);
+        opacity: 1;
+        filter: blur(0px) brightness(1.15);
+      }
+      45% {
+        transform: translate(var(--move-x), var(--move-y)) scale(1);
+        opacity: 1;
+        filter: blur(0.5px) brightness(1.25);
+      }
+      70% {
+        transform: translate(var(--move-x), calc(var(--move-y) + 8px)) scale(0.88);
+        opacity: 0.75;
+        filter: blur(1.5px) brightness(1.15);
+      }
+      100% {
+        transform: translate(var(--move-x), calc(var(--move-y) + 18px)) scale(0.58);
+        opacity: 0.22;
+        filter: blur(5px) brightness(0.85);
+      }
+    }
+
+    @keyframes chemicalAcidBurn {
+      0% {
+        fill: #f4f4ef;
+      }
+      25% {
+        fill: #eaffd8;
+      }
+      50% {
+        fill: #b7ff66;
+      }
+      75% {
+        fill: #6dde00;
+      }
+      100% {
+        fill: #244018;
+      }
+    }
+
+    @keyframes chemicalIconBurn {
+      0% {
+        fill: #73d900;
+      }
+      35% {
+        fill: #9cff2e;
+      }
+      70% {
+        fill: #5faa00;
+      }
+      100% {
+        fill: #244018;
+      }
+    }
+
+    @keyframes acidVialPour {
+      0% {
+        opacity: 0;
+        transform: translate(-18px, -22px) rotate(-35deg) scale(0.7);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-12px, -18px) rotate(-35deg) scale(1);
+      }
+      55% {
+        opacity: 1;
+        transform: translate(-8px, -14px) rotate(-65deg) scale(1);
+      }
+      80% {
+        opacity: 0.8;
+        transform: translate(-6px, -12px) rotate(-75deg) scale(0.9);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-4px, -10px) rotate(-80deg) scale(0.75);
+      }
+    }
+
+    @keyframes acidStreamPour {
+      0% {
+        opacity: 0;
+        stroke-width: 0;
+      }
+      22% {
+        opacity: 0;
+        stroke-width: 0;
+      }
+      35% {
+        opacity: 1;
+        stroke-width: 3;
+      }
+      65% {
+        opacity: 1;
+        stroke-width: 5;
+      }
+      85% {
+        opacity: 0.7;
+        stroke-width: 4;
+      }
+      100% {
+        opacity: 0;
+        stroke-width: 0;
+      }
+    }
+
+    @keyframes acidDropFall {
+      0% {
+        opacity: 0;
+        transform: translate(-8px, -26px) scale(0.4);
+      }
+      30% {
+        opacity: 1;
+        transform: translate(-5px, -14px) scale(0.75);
+      }
+      55% {
+        opacity: 1;
+        transform: translate(0px, 0px) scale(1);
+      }
+      75% {
+        opacity: 0.8;
+        transform: translate(3px, 9px) scale(1.25);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(5px, 15px) scale(0.3);
+      }
+    }
+
+    @keyframes acidPuddleSpread {
+      0% {
+        opacity: 0;
+        transform: scale(0.1);
+      }
+      45% {
+        opacity: 0;
+        transform: scale(0.2);
+      }
+      65% {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      85% {
+        opacity: 0.8;
+        transform: scale(1.45);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2);
       }
     }
 
@@ -557,7 +766,7 @@
 <body>
   <img class="company-logo" src="bmd-logo.jpg" alt="Black & McDonald logo">
 
-  <h1>Safety Basics Hazard Wheel</h1>
+  <h1>Energy Wheel</h1>
   <p>Click a hazard category to learn more.</p>
 
   <svg id="wheel" viewBox="0 0 500 500"></svg>
@@ -663,6 +872,47 @@
       const iconPoint = polarToCartesian(iconR, midAngle);
 
       group.appendChild(path);
+
+      if (hazard.name === "Chemical") {
+        const vial = makeSvgElement("path", {
+          d: `
+            M ${iconPoint.x - 18} ${iconPoint.y - 24}
+            L ${iconPoint.x + 8} ${iconPoint.y - 24}
+            L ${iconPoint.x + 10} ${iconPoint.y - 10}
+            L ${iconPoint.x - 16} ${iconPoint.y - 10}
+            Z
+          `,
+          class: "effect-deco acid-vial"
+        });
+
+        const stream = makeSvgElement("line", {
+          x1: iconPoint.x - 3,
+          y1: iconPoint.y - 8,
+          x2: iconPoint.x + 3,
+          y2: iconPoint.y + 10,
+          class: "effect-deco acid-stream"
+        });
+
+        const drop = makeSvgElement("circle", {
+          cx: iconPoint.x,
+          cy: iconPoint.y,
+          r: 6,
+          class: "effect-deco acid-drop"
+        });
+
+        const puddle = makeSvgElement("ellipse", {
+          cx: iconPoint.x,
+          cy: iconPoint.y + 16,
+          rx: 12,
+          ry: 5,
+          class: "effect-deco acid-puddle"
+        });
+
+        group.appendChild(vial);
+        group.appendChild(stream);
+        group.appendChild(drop);
+        group.appendChild(puddle);
+      }
 
       if (hazard.name === "Biological") {
         const bubbleData = [
@@ -822,7 +1072,10 @@
         group.classList.add(animationClass);
       }
 
-      const navigationDelay = hazardName === "Biological" ? 2100 : 850;
+      const navigationDelay =
+        hazardName === "Biological" ? 2100 :
+        hazardName === "Chemical" ? 1750 :
+        850;
 
       setTimeout(function () {
         window.location.href = destination;
